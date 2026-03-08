@@ -227,10 +227,12 @@
     letter-spacing: 0.04em; text-transform: uppercase;
     white-space: nowrap; padding: 0 48px;
     transition: color 0.25s;
-    cursor: default;
+    cursor: pointer;
     border-right: 1px solid var(--grey-200);
+    text-decoration: none;
+    display: inline-block;
   }
-  .logo-item:hover { color: var(--grey-700); }
+  .logo-item:hover { color: var(--grey-900); }
 
   /* ── SECTION BASE ── */
   section { padding: 100px 5%; }
@@ -688,31 +690,27 @@
 
 <!-- LOGOS STRIP -->
 <div class="logos-strip">
-  <p>Trusted by innovative companies</p>
+  <p>Trusted by leading brands and businesses</p>
   <div class="marquee-wrapper">
     <div class="marquee-track">
       <!-- Set 1 -->
-      <span class="logo-item">🏨 Courtyard by Marriott Bhopal</span>
-      <span class="logo-item">Wipro</span>
-      <span class="logo-item">DCODHA</span>
-      <span class="logo-item">DEODHA</span>
-      <span class="logo-item">OpenAI</span>
-      <span class="logo-item">Vercel</span>
-      <span class="logo-item">Stripe</span>
-      <span class="logo-item">Notion</span>
-      <span class="logo-item">Linear</span>
-      <span class="logo-item">Figma</span>
+      <a href="https://www.marriott.com/en-us/hotels/bhocy-courtyard-bhopal/overview/" target="_blank" class="logo-item">🏨 Courtyard by Marriott Bhopal</a>
+      <a href="https://www.branchesgrillandcafe.com/" target="_blank" class="logo-item">🍽️ Branches Grill & Cafe</a>
+      <a href="https://thenzone.com/" target="_blank" class="logo-item">🎯 The N Zone</a>
+      <a href="https://aawaasrealestate.in/" target="_blank" class="logo-item">🏢 Aawaas Real Estate</a>
+      <a href="https://www.wipro.com/" target="_blank" class="logo-item">💻 Wipro</a>
+      <a href="https://vercel.com/" target="_blank" class="logo-item">▲ Vercel</a>
+      <a href="https://stripe.com/" target="_blank" class="logo-item">💳 Stripe</a>
+      <a href="https://www.notion.so/" target="_blank" class="logo-item">📝 Notion</a>
       <!-- Set 2 — exact duplicate for seamless infinite loop -->
-      <span class="logo-item">🏨 Courtyard by Marriott Bhopal</span>
-      <span class="logo-item">Wipro</span>
-      <span class="logo-item">DCODHA</span>
-      <span class="logo-item">DEODHA</span>
-      <span class="logo-item">OpenAI</span>
-      <span class="logo-item">Vercel</span>
-      <span class="logo-item">Stripe</span>
-      <span class="logo-item">Notion</span>
-      <span class="logo-item">Linear</span>
-      <span class="logo-item">Figma</span>
+      <a href="https://www.marriott.com/en-us/hotels/bhocy-courtyard-bhopal/overview/" target="_blank" class="logo-item">🏨 Courtyard by Marriott Bhopal</a>
+      <a href="https://www.branchesgrillandcafe.com/" target="_blank" class="logo-item">🍽️ Branches Grill & Cafe</a>
+      <a href="https://thenzone.com/" target="_blank" class="logo-item">🎯 The N Zone</a>
+      <a href="https://aawaasrealestate.in/" target="_blank" class="logo-item">🏢 Aawaas Real Estate</a>
+      <a href="https://www.wipro.com/" target="_blank" class="logo-item">💻 Wipro</a>
+      <a href="https://vercel.com/" target="_blank" class="logo-item">▲ Vercel</a>
+      <a href="https://stripe.com/" target="_blank" class="logo-item">💳 Stripe</a>
+      <a href="https://www.notion.so/" target="_blank" class="logo-item">📝 Notion</a>
     </div>
   </div>
 </div>
@@ -1007,6 +1005,75 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- CLIENT SHOWCASE -->
+<section class="client-showcase" style="background: var(--white); padding: 100px 5%;">
+  <div class="section-head center">
+    <div class="section-label">Featured Projects</div>
+    <h2 class="section-title">Recent Client Success Stories</h2>
+    <p class="section-sub">Explore our latest work with industry-leading brands</p>
+  </div>
+  
+  <div class="client-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; max-width: 1200px; margin: 0 auto;">
+    
+    <div class="client-card" style="background: var(--grey-50); border-radius: 20px; overflow: hidden; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="height: 200px; background: linear-gradient(135deg, #1a3c5e, #2d6a4f); display: flex; align-items: center; justify-content: center; font-size: 3rem;">🏨</div>
+      <div style="padding: 30px;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; color: var(--grey-900);">Courtyard by Marriott Bhopal</h3>
+        <p style="color: var(--grey-600); line-height: 1.6; margin-bottom: 20px;">Complete hospitality platform with booking engine, dining reservations, and event management system.</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Web Platform</span>
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Booking System</span>
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Hospitality</span>
+        </div>
+        <a href="https://www.marriott.com/en-us/hotels/bhocy-courtyard-bhopal/overview/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; color: var(--grey-900); font-weight: 600; text-decoration: none;">View Project →</a>
+      </div>
+    </div>
+
+    <div class="client-card" style="background: var(--grey-50); border-radius: 20px; overflow: hidden; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="height: 200px; background: linear-gradient(135deg, #e63946, #f77f00); display: flex; align-items: center; justify-content: center; font-size: 3rem;">🍽️</div>
+      <div style="padding: 30px;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; color: var(--grey-900);">Branches Grill & Cafe</h3>
+        <p style="color: var(--grey-600); line-height: 1.6; margin-bottom: 20px;">Modern restaurant website with online ordering, table reservations, and loyalty program integration.</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">E-commerce</span>
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Food & Beverage</span>
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Mobile App</span>
+        </div>
+        <a href="https://www.branchesgrillandcafe.com/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; color: var(--grey-900); font-weight: 600; text-decoration: none;">View Project →</a>
+      </div>
+    </div>
+
+    <div class="client-card" style="background: var(--grey-50); border-radius: 20px; overflow: hidden; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="height: 200px; background: linear-gradient(135deg, #7209b7, #560bad); display: flex; align-items: center; justify-content: center; font-size: 3rem;">🎯</div>
+      <div style="padding: 30px;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; color: var(--grey-900);">The N Zone</h3>
+        <p style="color: var(--grey-600); line-height: 1.6; margin-bottom: 20px;">Entertainment and events platform with ticketing system, venue management, and real-time booking capabilities.</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Events Platform</span>
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Ticketing</span>
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Entertainment</span>
+        </div>
+        <a href="https://thenzone.com/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; color: var(--grey-900); font-weight: 600; text-decoration: none;">View Project →</a>
+      </div>
+    </div>
+
+    <div class="client-card" style="background: var(--grey-50); border-radius: 20px; overflow: hidden; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="height: 200px; background: linear-gradient(135deg, #023e8a, #0077b6); display: flex; align-items: center; justify-content: center; font-size: 3rem;">🏢</div>
+      <div style="padding: 30px;">
+        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 10px; color: var(--grey-900);">Aawaas Real Estate</h3>
+        <p style="color: var(--grey-600); line-height: 1.6; margin-bottom: 20px;">Comprehensive real estate platform with property listings, virtual tours, and CRM integration for agents.</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Real Estate</span>
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Property Portal</span>
+          <span style="background: var(--grey-200); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">CRM Integration</span>
+        </div>
+        <a href="https://aawaasrealestate.in/" target="_blank" style="display: inline-flex; align-items: center; gap: 8px; margin-top: 20px; color: var(--grey-900); font-weight: 600; text-decoration: none;">View Project →</a>
+      </div>
+    </div>
+
   </div>
 </section>
 
