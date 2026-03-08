@@ -1121,27 +1121,10 @@
         <p>Thanks! We've received your message and will get back to you within <strong>24 hours</strong>. Check your inbox for a confirmation.</p>
       </div>
     </div>
-
   </div>
 </section>
 
-<!-- EmailJS SDK -->
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  // ─────────────────────────────────────────────
-  // EMAILJS CONFIGURATION
-  // 1. Sign up free at https://www.emailjs.com
-  // 2. Create an Email Service and get your Service ID
-  // 3. Create an Email Template and get your Template ID
-  // 4. Get your Public Key from Account > API Keys
-  // Replace the placeholders below with your real values:
-  // ─────────────────────────────────────────────
-  const EMAILJS_PUBLIC_KEY  = 'YOUR_PUBLIC_KEY';   // e.g. 'user_xxxxxxxxxxx'
-  const EMAILJS_SERVICE_ID  = 'YOUR_SERVICE_ID';   // e.g. 'service_abc123'
-  const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';  // e.g. 'template_xyz456'
-
-  emailjs.init(EMAILJS_PUBLIC_KEY);
-
   let selectedBudget = '';
 
   function selectBudget(el) {
@@ -1176,30 +1159,40 @@
     btn.disabled = true;
     document.getElementById('btn-text').textContent = 'Sending…';
 
-    const templateParams = {
-      to_email:     'deodhamanish059@gmail.com',
-      from_name:    `${firstName} ${lastName}`,
-      from_email:   email,
-      phone:        phone || 'Not provided',
-      company:      company || 'Not provided',
-      project_type: projectType,
-      budget:       selectedBudget || 'Not specified',
-      message:      message,
-      reply_to:     email,
+    const formData = {
+      name: `${firstName} ${lastName}`,
+      email: email,
+      phone: phone || 'Not provided',
+      company: company || 'Not provided',
+      service: projectType,
+      budget: selectedBudget || 'Not specified',
+      message: message
     };
 
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-      .then(() => {
+    // Send to our backend API
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
         document.getElementById('form-content').style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
-      })
-      .catch((err) => {
-        console.error('EmailJS error:', err);
-        btn.disabled = false;
-        document.getElementById('btn-text').textContent = 'Send Enquiry →';
-        document.getElementById('form-error').style.display = 'block';
-        document.getElementById('form-error').textContent = 'Failed to send. Please email us directly at deodhamanish059@gmail.com';
-      });
+      } else {
+        throw new Error(data.message || 'Failed to send message');
+      }
+    })
+    .catch((err) => {
+      console.error('API error:', err);
+      btn.disabled = false;
+      document.getElementById('btn-text').textContent = 'Send Enquiry →';
+      document.getElementById('form-error').style.display = 'block';
+      document.getElementById('form-error').textContent = 'Failed to send. Please try again or email us directly.';
+    });
   }
 
   // Allow Enter key on inputs (except textarea)
@@ -1208,6 +1201,52 @@
       e.preventDefault();
       submitEnquiry();
     }
+  });
+
+  // Newsletter form handler
+  document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const email = document.getElementById('newsletter-email').value.trim();
+    const btn = document.getElementById('newsletter-btn');
+    const msg = document.getElementById('newsletter-message');
+    
+    if (!email || !email.includes('@')) {
+      msg.textContent = 'Please enter a valid email address.';
+      msg.style.color = '#ff6b6b';
+      return;
+    }
+    
+    btn.disabled = true;
+    btn.textContent = 'Subscribing...';
+    msg.textContent = '';
+    
+    fetch('/api/subscribe', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: email })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        msg.textContent = '🎉 Successfully subscribed! Check your email for confirmation.';
+        msg.style.color = '#22c55e';
+        document.getElementById('newsletter-email').value = '';
+      } else {
+        throw new Error(data.message || 'Failed to subscribe');
+      }
+    })
+    .catch((err) => {
+      console.error('Newsletter error:', err);
+      msg.textContent = 'Failed to subscribe. Please try again.';
+      msg.style.color = '#ff6b6b';
+    })
+    .finally(() => {
+      btn.disabled = false;
+      btn.textContent = 'Subscribe';
+    });
   });
 </script>
 
@@ -1239,9 +1278,16 @@
       </ul>
     </div>
     <div class="footer-col">
-      <h5>Resources</h5>
-      <ul>
-        <li><a href="#">Case Studies</a></li>
-        <li><a href="#">Documentation</a></li>
-        <li><a href="#">Pricing</a></li>
+      <h5>Newsletter</h5>
+      <p style="color:#888;font-size:.85rem;margin-bottom:16px;">Get the latest AI insights and updates delivered to your inbox.</p>
+      <form id="newsletter-form" style="display:flex;flex-direction:column;gap:8px;">
+        <input type="email" id="newsletter-email" placeholder="Your email" required 
+               style="padding:10px;border:1px solid #444;background:#333;color:white;border-radius:6px;font-size:.85rem;">
+        <button type="submit" id="newsletter-btn" 
+                style="padding:10px;background:var(--highlight);color:#111;border:none;border-radius:6px;font-weight:700;font-size:.85rem;cursor:pointer;transition:all 0.2s;">
+          Subscribe
+        </button>
+      </form>
+      <div id="newsletter-message" style="margin-top:8px;font-size:.8rem;"></div>
+    </div>
         <li><a href="#">Help Center</a></li>
