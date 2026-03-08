@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "AI-powered development agency website",
   "scripts": {
+    "build": "mkdir -p public && cp public/index.html public/index.html || echo 'Static site ready'",
     "dev": "serve public -p 8000",
-    "build": "echo 'Static site - no build needed'",
     "start": "serve public -p 8000"
   },
   "devDependencies": {
