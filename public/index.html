@@ -149,6 +149,297 @@
   }
   .mobile-menu-cta:hover { background: var(--grey-700); }
 
+  /* Chatbot Widget */
+  .chat-widget {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1000;
+  }
+  .chat-bubble {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #1a1a1a, #333);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  .chat-bubble:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 30px rgba(0,0,0,0.3);
+  }
+  .chat-bubble svg {
+    width: 28px;
+    height: 28px;
+    color: white;
+  }
+  .chat-notification {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    color: white;
+    animation: pulse 2s infinite;
+  }
+  .chat-popup {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 380px;
+    height: 600px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1001;
+    animation: slideUp 0.3s ease;
+  }
+  .chat-popup.show {
+    display: flex;
+  }
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .chat-popup-header {
+    background: linear-gradient(135deg, #1a1a1a, #333);
+    color: white;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .chat-popup-avatar {
+    width: 40px;
+    height: 40px;
+    background: #22c55e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .chat-popup-info h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 2px;
+  }
+  .chat-popup-info p {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+  .chat-popup-close {
+    margin-left: auto;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background 0.2s;
+  }
+  .chat-popup-close:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .chat-popup-status {
+    width: 8px;
+    height: 8px;
+    background: #22c55e;
+    border-radius: 50%;
+    margin-left: 8px;
+    animation: pulse 2s infinite;
+  }
+  .chat-popup-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    background: #fafafa;
+  }
+  .chat-popup-message {
+    margin-bottom: 16px;
+    display: flex;
+    gap: 8px;
+    animation: fadeIn 0.3s ease;
+  }
+  .chat-popup-message.bot {
+    flex-direction: row;
+  }
+  .chat-popup-message.user {
+    flex-direction: row-reverse;
+  }
+  .chat-popup-message-content {
+    max-width: 80%;
+    padding: 12px 16px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.4;
+  }
+  .chat-popup-message.bot .chat-popup-message-content {
+    background: white;
+    color: #333;
+    border: 1px solid #e5e7eb;
+    border-bottom-left-radius: 4px;
+  }
+  .chat-popup-message.user .chat-popup-message-content {
+    background: #1a1a1a;
+    color: white;
+    border-bottom-right-radius: 4px;
+  }
+  .chat-popup-message-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+  .chat-popup-message.bot .chat-popup-message-avatar {
+    background: #22c55e;
+    color: white;
+  }
+  .chat-popup-message.user .chat-popup-message-avatar {
+    background: #1a1a1a;
+    color: white;
+  }
+  .chat-popup-typing {
+    display: none;
+    padding: 12px 16px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 18px;
+    border-bottom-left-radius: 4px;
+    margin-bottom: 16px;
+    width: fit-content;
+  }
+  .chat-popup-typing.show {
+    display: block;
+  }
+  .chat-popup-typing-dots {
+    display: flex;
+    gap: 4px;
+  }
+  .chat-popup-typing-dots span {
+    width: 8px;
+    height: 8px;
+    background: #666;
+    border-radius: 50%;
+    animation: typing 1.4s infinite;
+  }
+  .chat-popup-typing-dots span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .chat-popup-typing-dots span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  @keyframes typing {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-10px); }
+  }
+  .chat-popup-input {
+    padding: 20px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+  }
+  .chat-popup-quick-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+  .chat-popup-quick-action {
+    padding: 6px 12px;
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+    border-radius: 15px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .chat-popup-quick-action:hover {
+    background: #1a1a1a;
+    color: white;
+    border-color: #1a1a1a;
+  }
+  .chat-popup-input-container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  .chat-popup-input input {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    border-radius: 25px;
+    font-size: 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .chat-popup-input input:focus {
+    border-color: #1a1a1a;
+  }
+  .chat-popup-send-btn {
+    width: 44px;
+    height: 44px;
+    background: #1a1a1a;
+    border: none;
+    border-radius: 50%;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, transform 0.1s;
+  }
+  .chat-popup-send-btn:hover {
+    background: #333;
+  }
+  .chat-popup-send-btn:active {
+    transform: scale(0.95);
+  }
+  @media (max-width: 480px) {
+    .chat-popup {
+      width: calc(100vw - 40px);
+      right: 20px;
+      left: 20px;
+      height: 500px;
+    }
+    .chat-widget {
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+
   /* ── HERO ── */
   .hero {
     min-height: 100vh;
@@ -1559,44 +1850,204 @@
   }
 </script>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-top">
-    <div class="footer-brand">
-      <a href="#" class="logo" style="color:white;margin-bottom:16px"><span class="logo-dot"></span>NexusAI</a>
-      <p>Building the next generation of intelligent products — faster, smarter, and built to last.</p>
+<!-- Chatbot JavaScript -->
+<script>
+  let chatConversationState = 'greeting';
+  let chatUserInfo = {
+    name: '',
+    email: '',
+    phone: '',
+    projectDetails: ''
+  };
+
+  function toggleChat() {
+    const popup = document.getElementById('chatPopup');
+    const bubble = document.getElementById('chatBubble');
+    const notification = document.getElementById('chatNotification');
+    
+    if (popup.classList.contains('show')) {
+      popup.classList.remove('show');
+      notification.style.display = 'flex';
+    } else {
+      popup.classList.add('show');
+      notification.style.display = 'none';
+      document.getElementById('chatInput').focus();
+    }
+  }
+
+  function addChatMessage(content, isUser = false) {
+    const messagesContainer = document.getElementById('chatMessages');
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `chat-popup-message ${isUser ? 'user' : 'bot'}`;
+    
+    const avatar = document.createElement('div');
+    avatar.className = 'chat-popup-message-avatar';
+    avatar.textContent = isUser ? 'U' : 'AI';
+    
+    const messageContent = document.createElement('div');
+    messageContent.className = 'chat-popup-message-content';
+    messageContent.textContent = content;
+    
+    messageDiv.appendChild(avatar);
+    messageDiv.appendChild(messageContent);
+    messagesContainer.appendChild(messageDiv);
+    
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function showChatTyping() {
+    document.getElementById('chatTyping').classList.add('show');
+    const messagesContainer = document.getElementById('chatMessages');
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function hideChatTyping() {
+    document.getElementById('chatTyping').classList.remove('show');
+  }
+
+  function getChatBotResponse(userMessage) {
+    const message = userMessage.toLowerCase();
+    
+    if (chatConversationState === 'greeting') {
+      if (message.includes('service') || message.includes('what') || message.includes('offer')) {
+        return "We offer comprehensive AI-powered development services including: 🚀 Web Applications, 🤖 AI Automation, 📱 Mobile Apps, 🎨 UI/UX Design, and ⚡ Performance Optimization. Would you like to know more about any specific service?";
+      } else if (message.includes('project') || message.includes('start') || message.includes('build')) {
+        chatConversationState = 'collecting_info';
+        return "Great! I'd love to help you start your project. To provide you with the best assistance, could you please tell me your name first?";
+      } else if (message.includes('price') || message.includes('cost') || message.includes('pricing')) {
+        return "Our pricing is project-based and depends on your specific requirements. We offer competitive rates with flexible payment options. Would you like to discuss your project needs so I can provide a more accurate estimate?";
+      } else if (message.includes('contact') || message.includes('support') || message.includes('talk')) {
+        return "You can reach our team through: 📧 Email: deodhamanish059@gmail.com, 📱 Phone: +91 91351 12405, or fill out the contact form on our website. We typically respond within 24 hours!";
+      } else {
+        return "I'm here to help! You can ask me about our services, start a project, get pricing information, or contact our team. What would you like to know?";
+      }
+    } else if (chatConversationState === 'collecting_info') {
+      if (!chatUserInfo.name) {
+        chatUserInfo.name = userMessage;
+        return `Nice to meet you, ${chatUserInfo.name}! 🎉 Now, could you please share your email address so we can follow up with you?`;
+      } else if (!chatUserInfo.email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(userMessage)) {
+          chatUserInfo.email = userMessage;
+          return "Perfect! Thank you. One last detail - could you provide your phone number for faster communication?";
+        } else {
+          return "That doesn't look like a valid email address. Could you please provide a correct email?";
+        }
+      } else if (!chatUserInfo.phone) {
+        chatUserInfo.phone = userMessage;
+        return "Excellent! Now, could you tell me a bit about your project? What kind of solution are you looking for?";
+      } else if (!chatUserInfo.projectDetails) {
+        chatUserInfo.projectDetails = userMessage;
+        chatConversationState = 'complete';
+        
+        // Send the collected data to your email (this would require backend integration)
+        console.log('New lead collected:', chatUserInfo);
+        
+        return `Thank you for all the information, ${chatUserInfo.name}! 🚀 I've captured your project details. Our team will review your requirements and contact you within 24 hours at ${chatUserInfo.email} or ${chatUserInfo.phone}. Is there anything specific you'd like to know while you wait?`;
+      }
+    } else if (chatConversationState === 'complete') {
+      return "I've already captured your information and our team will be in touch soon! Is there anything else I can help you with in the meantime?";
+    }
+    
+    return "I'm here to help! Feel free to ask about our services, pricing, or how to start a project.";
+  }
+
+  function sendChatMessage() {
+    const input = document.getElementById('chatInput');
+    const message = input.value.trim();
+    
+    if (message === '') return;
+    
+    addChatMessage(message, true);
+    input.value = '';
+    
+    showChatTyping();
+    
+    setTimeout(() => {
+      hideChatTyping();
+      const response = getChatBotResponse(message);
+      addChatMessage(response);
+    }, 1000 + Math.random() * 1000);
+  }
+
+  function sendQuickMessage(message) {
+    document.getElementById('chatInput').value = message;
+    sendChatMessage();
+  }
+
+  function handleChatKeyPress(event) {
+    if (event.key === 'Enter') {
+      sendChatMessage();
+    }
+  }
+
+  // Initialize chat
+  document.addEventListener('DOMContentLoaded', function() {
+    // Show notification after 5 seconds
+    setTimeout(() => {
+      const notification = document.getElementById('chatNotification');
+      if (notification) {
+        notification.style.display = 'flex';
+      }
+    }, 5000);
+  });
+</script>
+
+<!-- Chatbot Widget -->
+<div class="chat-widget">
+  <div class="chat-bubble" id="chatBubble" onclick="toggleChat()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+    <div class="chat-notification" id="chatNotification" style="display: none;">1</div>
+  </div>
+  
+  <div class="chat-popup" id="chatPopup">
+    <div class="chat-popup-header">
+      <div class="chat-popup-avatar">AI</div>
+      <div class="chat-popup-info">
+        <h3>NexusAI Assistant</h3>
+        <p>Always here to help</p>
+      </div>
+      <div class="chat-popup-status"></div>
+      <button class="chat-popup-close" onclick="toggleChat()">×</button>
     </div>
-    <div class="footer-col">
-      <h5>Product</h5>
-      <ul>
-        <li><a href="#">AI Web Apps</a></li>
-        <li><a href="#">Automation</a></li>
-        <li><a href="#">Mobile</a></li>
-        <li><a href="#">Chatbots</a></li>
-        <li><a href="#">Analytics</a></li>
-      </ul>
+    
+    <div class="chat-popup-messages" id="chatMessages">
+      <div class="chat-popup-message bot">
+        <div class="chat-popup-message-avatar">AI</div>
+        <div class="chat-popup-message-content">
+          👋 Hello and welcome to NexusAI! I'm your personal AI assistant, here to help you explore our services and answer any questions you might have. How can I assist you today?
+        </div>
+      </div>
     </div>
-    <div class="footer-col">
-      <h5>Company</h5>
-      <ul>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Careers</a></li>
-        <li><a href="#">Blog</a></li>
-        <li><a href="#">Press</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
+    
+    <div class="chat-popup-typing" id="chatTyping">
+      <div class="chat-popup-typing-dots">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
-    <div class="footer-col">
-      <h5>Newsletter</h5>
-      <p style="color:#888;font-size:.85rem;margin-bottom:16px;">Get the latest AI insights and updates delivered to your inbox.</p>
-      <form id="newsletter-form" style="display:flex;flex-direction:column;gap:8px;">
-        <input type="email" id="newsletter-email" placeholder="Your email" required 
-               style="padding:10px;border:1px solid #444;background:#333;color:white;border-radius:6px;font-size:.85rem;">
-        <button type="submit" id="newsletter-btn" 
-                style="padding:10px;background:var(--highlight);color:#111;border:none;border-radius:6px;font-weight:700;font-size:.85rem;cursor:pointer;transition:all 0.2s;">
-          Subscribe
+    
+    <div class="chat-popup-input">
+      <div class="chat-popup-quick-actions">
+        <div class="chat-popup-quick-action" onclick="sendQuickMessage('Tell me about your services')">Services</div>
+        <div class="chat-popup-quick-action" onclick="sendQuickMessage('I want to start a project')">Start Project</div>
+        <div class="chat-popup-quick-action" onclick="sendQuickMessage('Pricing information')">Pricing</div>
+        <div class="chat-popup-quick-action" onclick="sendQuickMessage('Contact support')">Contact</div>
+      </div>
+      <div class="chat-popup-input-container">
+        <input type="text" id="chatInput" placeholder="Type your message..." onkeypress="handleChatKeyPress(event)">
+        <button class="chat-popup-send-btn" onclick="sendChatMessage()">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+          </svg>
         </button>
-      </form>
-      <div id="newsletter-message" style="margin-top:8px;font-size:.8rem;"></div>
+      </div>
     </div>
-        <li><a href="#">Help Center</a></li>
+  </div>
+</div>
+
+</body>
+</html>

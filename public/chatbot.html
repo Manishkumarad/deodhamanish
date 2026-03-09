@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusAI Assistant</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: #f8f9fa;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 400px;
+            height: 600px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #1a1a1a, #333);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .chat-info h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .chat-info p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .status-indicator {
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            margin-left: auto;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: #fafafa;
+        }
+
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+            gap: 8px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.bot {
+            flex-direction: row;
+        }
+
+        .message.user {
+            flex-direction: row-reverse;
+        }
+
+        .message-content {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.bot .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e5e7eb;
+            border-bottom-left-radius: 4px;
+        }
+
+        .message.user .message-content {
+            background: #1a1a1a;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .message.bot .message-avatar {
+            background: #22c55e;
+            color: white;
+        }
+
+        .message.user .message-avatar {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .typing-indicator {
+            display: none;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+            margin-bottom: 16px;
+            width: fit-content;
+        }
+
+        .typing-indicator.show {
+            display: block;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 8px;
+            height: 8px;
+            background: #666;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .chat-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .input-container {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .chat-input input:focus {
+            border-color: #1a1a1a;
+        }
+
+        .send-btn {
+            width: 44px;
+            height: 44px;
+            background: #1a1a1a;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .send-btn:hover {
+            background: #333;
+        }
+
+        .send-btn:active {
+            transform: scale(0.95);
+        }
+
+        .quick-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .quick-action {
+            padding: 6px 12px;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .quick-action:hover {
+            background: #1a1a1a;
+            color: white;
+            border-color: #1a1a1a;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="chat-avatar">AI</div>
+            <div class="chat-info">
+                <h3>NexusAI Assistant</h3>
+                <p>Always here to help</p>
+            </div>
+            <div class="status-indicator"></div>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">
+                <div class="message-avatar">AI</div>
+                <div class="message-content">
+                    👋 Hello and welcome to NexusAI! I'm your personal AI assistant, here to help you explore our services and answer any questions you might have. How can I assist you today?
+                </div>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <div class="quick-actions" id="quickActions">
+                <div class="quick-action" onclick="sendQuickMessage('Tell me about your services')">Services</div>
+                <div class="quick-action" onclick="sendQuickMessage('I want to start a project')">Start Project</div>
+                <div class="quick-action" onclick="sendQuickMessage('Pricing information')">Pricing</div>
+                <div class="quick-action" onclick="sendQuickMessage('Contact support')">Contact</div>
+            </div>
+            <div class="input-container">
+                <input type="text" id="messageInput" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let conversationState = 'greeting';
+        let userInfo = {
+            name: '',
+            email: '',
+            phone: '',
+            projectDetails: ''
+        };
+
+        function addMessage(content, isUser = false) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isUser ? 'user' : 'bot'}`;
+            
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = isUser ? 'U' : 'AI';
+            
+            const messageContent = document.createElement('div');
+            messageContent.className = 'message-content';
+            messageContent.textContent = content;
+            
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(messageContent);
+            messagesContainer.appendChild(messageDiv);
+            
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTypingIndicator() {
+            document.getElementById('typingIndicator').classList.add('show');
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTypingIndicator() {
+            document.getElementById('typingIndicator').classList.remove('show');
+        }
+
+        function getBotResponse(userMessage) {
+            const message = userMessage.toLowerCase();
+            
+            if (conversationState === 'greeting') {
+                if (message.includes('service') || message.includes('what') || message.includes('offer')) {
+                    return "We offer comprehensive AI-powered development services including: 🚀 Web Applications, 🤖 AI Automation, 📱 Mobile Apps, 🎨 UI/UX Design, and ⚡ Performance Optimization. Would you like to know more about any specific service?";
+                } else if (message.includes('project') || message.includes('start') || message.includes('build')) {
+                    conversationState = 'collecting_info';
+                    return "Great! I'd love to help you start your project. To provide you with the best assistance, could you please tell me your name first?";
+                } else if (message.includes('price') || message.includes('cost') || message.includes('pricing')) {
+                    return "Our pricing is project-based and depends on your specific requirements. We offer competitive rates with flexible payment options. Would you like to discuss your project needs so I can provide a more accurate estimate?";
+                } else if (message.includes('contact') || message.includes('support') || message.includes('talk')) {
+                    return "You can reach our team through: 📧 Email: deodhamanish059@gmail.com, 📱 Phone: +91 91351 12405, or fill out the contact form on our website. We typically respond within 24 hours!";
+                } else {
+                    return "I'm here to help! You can ask me about our services, start a project, get pricing information, or contact our team. What would you like to know?";
+                }
+            } else if (conversationState === 'collecting_info') {
+                if (!userInfo.name) {
+                    userInfo.name = userMessage;
+                    return `Nice to meet you, ${userInfo.name}! 🎉 Now, could you please share your email address so we can follow up with you?`;
+                } else if (!userInfo.email) {
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (emailRegex.test(userMessage)) {
+                        userInfo.email = userMessage;
+                        return "Perfect! Thank you. One last detail - could you provide your phone number for faster communication?";
+                    } else {
+                        return "That doesn't look like a valid email address. Could you please provide a correct email?";
+                    }
+                } else if (!userInfo.phone) {
+                    userInfo.phone = userMessage;
+                    return "Excellent! Now, could you tell me a bit about your project? What kind of solution are you looking for?";
+                } else if (!userInfo.projectDetails) {
+                    userInfo.projectDetails = userMessage;
+                    conversationState = 'complete';
+                    return `Thank you for all the information, ${userInfo.name}! 🚀 I've captured your project details. Our team will review your requirements and contact you within 24 hours at ${userInfo.email} or ${userInfo.phone}. Is there anything specific you'd like to know while you wait?`;
+                }
+            } else if (conversationState === 'complete') {
+                return "I've already captured your information and our team will be in touch soon! Is there anything else I can help you with in the meantime?";
+            }
+            
+            return "I'm here to help! Feel free to ask about our services, pricing, or how to start a project.";
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            addMessage(message, true);
+            input.value = '';
+            
+            showTypingIndicator();
+            
+            setTimeout(() => {
+                hideTypingIndicator();
+                const response = getBotResponse(message);
+                addMessage(response);
+            }, 1000 + Math.random() * 1000);
+        }
+
+        function sendQuickMessage(message) {
+            document.getElementById('messageInput').value = message;
+            sendMessage();
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('messageInput').focus();
+        });
+    </script>
+</body>
+</html>
