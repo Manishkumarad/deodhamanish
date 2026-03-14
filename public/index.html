@@ -7,6 +7,8 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
 
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
 <style>
   :root {
     --white: #ffffff;
@@ -2228,52 +2230,53 @@
     btn.disabled = true;
     document.getElementById('btn-text').textContent = 'Sending…';
 
-    const formData = {
-      name: `${firstName} ${lastName}`,
-      email: email,
-      phone: phone || 'Not provided',
-      company: company || 'Not provided',
-      service: projectType,
-      budget: selectedBudget || 'Not specified',
-      message: message
+    // EmailJS configuration - UPDATE THESE VALUES
+    const EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID'; // Replace with your EmailJS Service ID
+    const EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID'; // Replace with your EmailJS Template ID
+    const EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY'; // Replace with your EmailJS Public Key
+
+    // Initialize EmailJS
+    (function() {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    })();
+
+    const templateParams = {
+      from_name:    `${firstName} ${lastName}`,
+      from_email:   email,
+      phone:        phone || 'Not provided',
+      company:      company || 'Not provided',
+      project_type: projectType,
+      budget:       selectedBudget || 'Not specified',
+      message:      message,
+      to_email:     'deodhamanish059@gmail.com', // Your email where you'll receive enquiries
+      reply_to:     email,
     };
 
-    // Send to our backend API
-    fetch('/api/contact', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success) {
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
+      .then(() => {
         document.getElementById('form-content').style.display = 'none';
         document.getElementById('form-success').style.display = 'block';
-      } else {
-        throw new Error(data.message || 'Failed to send message');
-      }
-    })
-    .catch((err) => {
-      console.error('API error:', err);
-      btn.disabled = false;
-      document.getElementById('btn-text').textContent = 'Send Enquiry →';
-      
-      // Show success message anyway with contact info
-      document.getElementById('form-content').style.display = 'none';
-      document.getElementById('form-success').style.display = 'block';
-      document.getElementById('form-success').innerHTML = `
-        <div class="success-icon">🎉</div>
-        <h3>Thank You for Your Enquiry!</h3>
-        <p><strong>We've received your message and will contact you within 24 hours!</strong></p>
-        <p style="margin-top: 20px;">If you need immediate assistance, reach out to us directly:</p>
-        <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-top: 15px;">
-          <p>📧 <strong>Email:</strong> <a href="mailto:deodhamanish059@gmail.com" style="color:#1a1a1a;">deodhamanish059@gmail.com</a></p>
-          <p>📱 <strong>Phone:</strong> <a href="tel:+919135112405" style="color:#1a1a1a;">+91 91351 12405</a></p>
-        </div>
-      `;
-    });
+      })
+      .catch((err) => {
+        console.error('EmailJS error:', err);
+        btn.disabled = false;
+        document.getElementById('btn-text').textContent = 'Send Enquiry →';
+        document.getElementById('form-error').style.display = 'block';
+        document.getElementById('form-error').textContent = 'Failed to send. Please email us directly at deodhamanish059@gmail.com';
+        
+        // Show success message anyway with contact info
+        document.getElementById('form-content').style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+        document.getElementById('form-success').innerHTML = `
+          <h3>Thank You for Your Enquiry!</h3>
+          <p><strong>We've received your message and will contact you within 24 hours!</strong></p>
+          <p style="margin-top: 20px;">If you need immediate assistance, reach out to us directly:</p>
+          <div style="background: #f5f5f5; padding: 15px; border-radius: 8px; margin-top: 15px;">
+            <p>📧 <strong>Email:</strong> <a href="mailto:deodhamanish059@gmail.com" style="color:#1a1a1a;">deodhamanish059@gmail.com</a></p>
+            <p>📱 <strong>Phone:</strong> <a href="tel:+919135112405" style="color:#1a1a1a;">+91 91351 12405</a></p>
+          </div>
+        `;
+      });
   }
 
   // Allow Enter key on inputs (except textarea)
