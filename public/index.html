@@ -13,14 +13,25 @@
   :root {
     --white: #ffffff;
     --grey-50: #f9f9f9;
-    --grey-100: #f2f2f2;
-    --grey-200: #e8e8e8;
-    --grey-300: #d0d0d0;
-    --grey-500: #888888;
-    --grey-700: #444444;
-    --grey-900: #111111;
-    --accent: #1a1a1a;
-    --highlight: #e0ff4f;
+    --grey-100: #f3f4f6;
+    --grey-200: #e5e7eb;
+    --grey-300: #d1d5db;
+    --grey-500: #6b7280;
+    --grey-700: #374151;
+    --grey-900: #111827;
+    
+    /* Enterprise Color Scheme */
+    --primary-blue: #0B1F3A;
+    --secondary-blue: #2563EB;
+    --accent-cyan: #22D3EE;
+    --highlight: #22D3EE;
+    --text-primary: #111827;
+    --text-secondary: #6b7280;
+    --bg-light: #f8fafc;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #0B1F3A, #2563EB);
+    --gradient-accent: linear-gradient(135deg, #22D3EE, #2563EB);
     --nav-h: 72px;
   }
 
@@ -43,38 +54,68 @@
 
   /* ── NAV ── */
   nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    position: fixed;
+    top: 0; left: 0; right: 0;
     height: var(--nav-h);
-    background: rgba(255,255,255,0.92);
-    backdrop-filter: blur(14px);
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--grey-200);
-    display: flex; align-items: center; justify-content: space-between;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     padding: 0 5%;
+    font-family: 'Lato', sans-serif;
   }
   .logo {
-    font-family: 'Lato', sans-serif;
-    font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px;
-    color: var(--grey-900); text-decoration: none;
-    display: flex; align-items: center; gap: 8px;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--primary-blue);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-  .logo-dot { width: 10px; height: 10px; background: var(--highlight); border-radius: 50%; display: inline-block; }
+  .logo-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-cyan);
+    border-radius: 50%;
+    display: inline-block;
+  }
   .nav-links {
-    display: flex; gap: 36px; list-style: none;
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 40px;
   }
   .nav-links a {
-    text-decoration: none; color: var(--grey-700);
-    font-size: 0.9rem; font-weight: 500; letter-spacing: 0.01em;
+    text-decoration: none;
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 0.95rem;
     transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--grey-900); }
+  .nav-links a:hover { color: var(--secondary-blue); }
   .nav-cta {
-    background: var(--grey-900); color: var(--white);
-    border: none; padding: 10px 22px; border-radius: 8px;
-    font-family: 'Lato', sans-serif; font-size: 0.9rem; font-weight: 500;
-    cursor: pointer; transition: background 0.2s, transform 0.15s;
+    background: var(--gradient-primary);
+    color: var(--white);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s, transform 0.15s;
     text-decoration: none;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
   }
-  .nav-cta:hover { background: var(--grey-700); transform: translateY(-1px); }
+  .nav-cta:hover { 
+    background: var(--secondary-blue);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+  }
 
   /* ── STATS COUNTER ── */
   .stats-counter {
@@ -1357,9 +1398,9 @@
   <a href="#" class="logo"><span class="logo-dot"></span>Deodha</a>
   <ul class="nav-links">
     <li><a href="#services">Services</a></li>
-    <li><a href="#how">Process</a></li>
-    <li><a href="#features">Features</a></li>
-    <li><a href="#results">Results</a></li>
+    <li><a href="#industries">Industries</a></li>
+    <li><a href="#case-studies">Case Studies</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
   <a href="#contact" class="nav-cta">Get started →</a>
   
@@ -1388,45 +1429,54 @@
   <div class="hero-blob"></div>
   <div class="hero-inner">
     <div>
-      <div class="hero-badge fade-up"><span class="badge-dot"></span> AI-Powered Development Agency</div>
-      <h1 class="fade-up delay-1">Build <em>smarter</em> apps with AI automation.</h1>
-      <p class="hero-sub fade-up delay-2">We design, build, and automate web applications and digital products — powered by cutting-edge AI to launch faster and scale further.</p>
+      <div class="hero-badge fade-up"><span class="badge-dot"></span> Digital Engineering & AI Automation</div>
+      <h1 class="hero-title fade-up delay-1">We Build Digital Systems That <span style="color: var(--accent-cyan);">Automate and Scale</span> Your Business</h1>
+      <p class="hero-sub fade-up delay-2">Enterprise-grade CRM solutions, AI-powered automation, and SaaS platforms that transform how businesses operate, manage leads, and scale revenue.</p>
       <div class="hero-actions fade-up delay-3">
-        <a href="#contact" class="btn-primary">Start your project</a>
-        <a href="#how" class="btn-ghost">See how it works</a>
+        <a href="#contact" class="btn-primary">Book a Call</a>
+        <a href="#services" class="btn-secondary">Get Free Audit</a>
       </div>
       <div class="hero-stats fade-up delay-4">
-        <div>
-          <div class="stat-num">120+</div>
-          <div class="stat-label">Projects delivered</div>
+        <div class="stat">
+          <div class="stat-number">98%</div>
+          <div class="stat-label">Client Satisfaction</div>
         </div>
-        <div>
-          <div class="stat-num">40%</div>
-          <div class="stat-label">Faster launch time</div>
+        <div class="stat">
+          <div class="stat-number">30%</div>
+          <div class="stat-label">Avg. Revenue Increase</div>
         </div>
-        <div>
-          <div class="stat-num">98%</div>
-          <div class="stat-label">Client satisfaction</div>
+        <div class="stat">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">Automation Support</div>
         </div>
       </div>
     </div>
-
     <div class="hero-visual fade-up delay-2">
-      <div class="float-pill pill-1"><span class="pill-icon">⚡</span> Deploying in 3s…</div>
-      <div class="mockup-card">
+      <div class="hero-mockup">
         <div class="mockup-header">
-          <div class="mockup-avatar">NX</div>
-          <div>
-            <div class="mockup-title">Project Dashboard</div>
-            <div class="mockup-sub">Live intelligence feed</div>
+          <div class="mockup-dots">
+            <span></span>
+            <span></span>
+            <span></span>
           </div>
+          <div class="mockup-title">Deodha CRM Dashboard</div>
         </div>
-        <div class="mockup-metrics">
-          <div class="metric-box">
-            <div class="metric-val" style="color:var(--highlight)">$51B</div>
-            <div class="metric-lbl">Spend optimized</div>
-            <div class="metric-up">↑ 14.2%</div>
+        <div class="mockup-content">
+          <div class="mockup-metrics">
+            <div class="metric">
+              <div class="metric-value">₹2.4M</div>
+              <div class="metric-label">Total Revenue</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">1,247</div>
+              <div class="metric-label">Active Leads</div>
+            </div>
+            <div class="metric">
+              <div class="metric-value">89%</div>
+              <div class="metric-label">Conversion Rate</div>
+            </div>
           </div>
+          <div class="mockup-chart"></div>
           <div class="metric-box">
             <div class="metric-val">11M</div>
             <div class="metric-lbl">Hours automated</div>
@@ -1791,66 +1841,117 @@
 <!-- SERVICES -->
 <section class="services" id="services">
   <div class="section-head">
-    <div class="section-label">What we build</div>
-    <h2 class="section-title">End-to-end AI-powered<br>digital solutions.</h2>
-    <p class="section-sub">From concept to deployment — we blend design, engineering, and AI automation into products that grow with your business.</p>
+    <div class="section-label">What We Build</div>
+    <h2 class="section-title">Enterprise Digital Solutions</h2>
+    <p class="section-sub">Transform your business with our proven digital engineering and automation systems</p>
   </div>
   <div class="services-grid">
     <div class="service-card">
+      <div class="service-icon">🏗️</div>
+      <h3>Digital Engineering</h3>
+      <p>Custom software architecture, scalable platforms, and enterprise-grade applications built for performance and growth.</p>
+      <ul>
+        <li>Enterprise Software Development</li>
+        <li>Cloud Architecture Design</li>
+        <li>API Development & Integration</li>
+        <li>Performance Optimization</li>
+      </ul>
+    </div>
+    <div class="service-card">
       <div class="service-icon">🤖</div>
-      <h3>AI-Powered Web Apps</h3>
-      <p>Custom web applications with built-in AI features — intelligent search, recommendations, automation, and chat interfaces tailored to your users.</p>
-      <a href="#" class="service-arrow">Explore → </a>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">⚙️</div>
-      <h3>Workflow Automation</h3>
-      <p>Replace manual processes with AI-driven pipelines. We automate data flows, approvals, reporting, and operations so your team focuses on what matters.</p>
-      <a href="#" class="service-arrow">Explore →</a>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">📱</div>
-      <h3>Smart Mobile Apps</h3>
-      <p>Cross-platform mobile experiences with on-device AI, real-time sync, and intelligent notifications that adapt to each user's behavior.</p>
-      <a href="#" class="service-arrow">Explore →</a>
-    </div>
-    <div class="service-card">
-      <div class="service-icon">🧠</div>
-      <h3>AI Chatbots & Agents</h3>
-      <p>Deploy conversational AI agents and copilots trained on your data — for customer support, internal knowledge, sales enablement, and more.</p>
-      <a href="#" class="service-arrow">Explore →</a>
+      <h3>AI Automation</h3>
+      <p>Intelligent automation systems that reduce manual work, increase efficiency, and provide data-driven insights for better decision making.</p>
+      <ul>
+        <li>Workflow Automation</li>
+        <li>AI-Powered Analytics</li>
+        <li>Process Optimization</li>
+        <li>Intelligent Document Processing</li>
+      </ul>
     </div>
     <div class="service-card">
       <div class="service-icon">📊</div>
-      <h3>Data & Analytics Dashboards</h3>
-      <p>Turn raw data into interactive dashboards with AI-powered insights, anomaly detection, and natural language querying built in.</p>
-      <a href="#" class="service-arrow">Explore →</a>
+      <h3>CRM Solutions</h3>
+      <p>Custom CRM systems that streamline lead management, automate follow-ups, and provide comprehensive customer relationship management.</p>
+      <ul>
+        <li>Custom CRM Development</li>
+        <li>Lead Management Systems</li>
+        <li>Sales Pipeline Automation</li>
+        <li>Customer Analytics Dashboard</li>
+      </ul>
     </div>
     <div class="service-card">
-      <div class="service-icon">🔗</div>
-      <h3>API & Integration Services</h3>
-      <p>Seamlessly connect your tools, platforms, and data sources with robust APIs, webhooks, and AI middleware that keeps everything in sync.</p>
-      <a href="#" class="service-arrow">Explore →</a>
+      <div class="service-icon">☁️</div>
+      <h3>SaaS Platforms</h3>
+      <p>Scalable SaaS applications with subscription management, multi-tenancy, and enterprise-grade security for recurring revenue.</p>
+      <ul>
+        <li>SaaS Application Development</li>
+        <li>Subscription Management</li>
+        <li>Multi-Tenant Architecture</li>
+        <li>Enterprise Security & Compliance</li>
+      </ul>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="how" id="how">
-  <div class="how-inner">
-    <div>
-      <div class="section-label">Our process</div>
-      <h2 class="section-title">From idea to<br>launch in weeks.</h2>
-      <p class="section-sub" style="margin-bottom:40px">A lean, AI-accelerated process that cuts development time without sacrificing quality.</p>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">01</div>
-          <div class="step-content">
-            <h4>Discovery & Strategy</h4>
-            <p>We map your goals, users, and tech stack — then design an AI-first architecture that scales from day one.</p>
-          </div>
-        </div>
-        <div class="step">
+<!-- INDUSTRIES SERVED -->
+<section class="industries" id="industries" style="background: var(--bg-light); padding: 100px 5%;">
+  <div class="section-head center">
+    <div class="section-label">Industries We Transform</div>
+    <h2 class="section-title">Proven Solutions Across Multiple Sectors</h2>
+    <p class="section-sub">We've helped businesses across industries automate, scale, and dominate their markets</p>
+  </div>
+  
+  <div class="industries-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; max-width: 1000px; margin: 0 auto;">
+    <div class="industry-card" style="background: white; padding: 40px 30px; border-radius: 16px; text-align: center; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="font-size: 3rem; margin-bottom: 20px;">🏢</div>
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary);">Real Estate</h3>
+      <p style="color: var(--text-secondary); line-height: 1.6;">CRM systems for property management, lead generation, and automated follow-ups</p>
+    </div>
+    
+    <div class="industry-card" style="background: white; padding: 40px 30px; border-radius: 16px; text-align: center; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="font-size: 3rem; margin-bottom: 20px;">🍽️</div>
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary);">Restaurants & Hospitality</h3>
+      <p style="color: var(--text-secondary); line-height: 1.6;">Booking systems, inventory management, and customer loyalty platforms</p>
+    </div>
+    
+    <div class="industry-card" style="background: white; padding: 40px 30px; border-radius: 16px; text-align: center; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="font-size: 3rem; margin-bottom: 20px;">🏥</div>
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary);">Healthcare</h3>
+      <p style="color: var(--text-secondary); line-height: 1.6;">Patient management systems, appointment scheduling, and telemedicine platforms</p>
+    </div>
+    
+    <div class="industry-card" style="background: white; padding: 40px 30px; border-radius: 16px; text-align: center; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="font-size: 3rem; margin-bottom: 20px;">🛍️</div>
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary);">E-commerce & Retail</h3>
+      <p style="color: var(--text-secondary); line-height: 1.6;">Inventory automation, customer analytics, and multi-channel sales platforms</p>
+    </div>
+    
+    <div class="industry-card" style="background: white; padding: 40px 30px; border-radius: 16px; text-align: center; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="font-size: 3rem; margin-bottom: 20px;">🎓</div>
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary);">Education</h3>
+      <p style="color: var(--text-secondary); line-height: 1.6;">Learning management systems, student analytics, and automated grading platforms</p>
+    </div>
+    
+    <div class="industry-card" style="background: white; padding: 40px 30px; border-radius: 16px; text-align: center; border: 1px solid var(--grey-200); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 20px 40px rgba(0,0,0,0.1)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'">
+      <div style="font-size: 3rem; margin-bottom: 20px;">🏭</div>
+      <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 16px; color: var(--text-primary);">Manufacturing</h3>
+      <p style="color: var(--text-secondary); line-height: 1.6;">Supply chain automation, quality control systems, and production monitoring</p>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="case-studies" id="case-studies">
+  <div class="section-head center">
+    <div class="section-label">Success Stories</div>
+    <h2 class="section-title">Proven Results With Real Clients</h2>
+    <p class="section-sub">See how we've helped businesses like yours achieve measurable growth</p>
+  </div>
+  <div class="case-study-grid">
+    <div class="case-study-card">
+      <div class="case-study-logo">🏨</div>
+      <h3>Courtyard by Marriott Bhopal</h3>
+      <p>Custom hotel management system with booking, inventory, and customer loyalty features</p>
           <div class="step-num">02</div>
           <div class="step-content">
             <h4>Design & Prototype</h4>
