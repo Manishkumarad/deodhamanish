@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NexusAI — Client Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1117;
+  --bg2: #161b26;
+  --bg3: #1e2535;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.12);
+  --text: #e8eaf0;
+  --text2: #8892a4;
+  --text3: #4a5568;
+  --accent: #e0ff4f;
+  --accent2: #c8e63a;
+  --blue: #3b82f6;
+  --green: #22c55e;
+  --red: #ef4444;
+  --orange: #f97316;
+  --purple: #a855f7;
+  --sidebar-w: 240px;
+  --nav-h: 62px;
+  --radius: 14px;
+  --font: 'Lato', sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); overflow-x: hidden; line-height: 1.5; }
+
+/* ── LOGIN PAGE ── */
+#login-page {
+  min-height: 100vh; display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  background-image: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(224,255,79,0.06) 0%, transparent 70%);
+}
+.login-card {
+  width: 420px; background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 24px; padding: 48px 40px;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+}
+.login-logo { display: flex; align-items: center; gap: 8px; margin-bottom: 36px; justify-content: center; }
+.login-logo-dot { width: 10px; height: 10px; background: var(--accent); border-radius: 50%; }
+.login-logo-text { font-size: 1.4rem; font-weight: 900; letter-spacing: -0.5px; }
+.login-logo-sub { color: var(--text2); font-weight: 400; }
+.login-title { font-size: 1.6rem; font-weight: 900; text-align: center; margin-bottom: 6px; }
+.login-sub { color: var(--text2); font-size: .88rem; text-align: center; margin-bottom: 32px; }
+.login-field { margin-bottom: 16px; }
+.login-field label { display: block; font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text2); margin-bottom: 8px; }
+.login-field input {
+  width: 100%; padding: 13px 16px; background: var(--bg3);
+  border: 1.5px solid var(--border2); border-radius: 10px;
+  color: var(--text); font-family: var(--font); font-size: .95rem;
+  outline: none; transition: border-color .2s; line-height: 1.5;
+}
+.login-field input:focus { border-color: var(--accent); }
+.login-field input::placeholder { color: var(--text3); }
+.login-btn {
+  width: 100%; padding: 14px; background: var(--accent); color: #111;
+  border: none; border-radius: 10px; font-family: var(--font);
+  font-size: 1rem; font-weight: 900; cursor: pointer;
+  transition: all .2s; margin-top: 8px;
+}
+.login-btn:hover { background: var(--accent2); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(224,255,79,0.25); }
+.login-demo { text-align: center; margin-top: 20px; font-size: .82rem; color: var(--text2); }
+.login-demo span { color: var(--accent); cursor: pointer; font-weight: 700; }
+.login-demo span:hover { text-decoration: underline; }
+.login-error { display: none; background: rgba(239,68,68,.15); border: 1px solid rgba(239,68,68,.3); border-radius: 8px; padding: 10px 14px; color: #fca5a5; font-size: .85rem; margin-bottom: 14px; text-align: center; }
+
+/* ── DASHBOARD LAYOUT ── */
+#dashboard { display: none; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+  position: fixed; top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-w); background: var(--bg2);
+  border-right: 1px solid var(--border); z-index: 50;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.sidebar-brand {
+  padding: 22px 20px 18px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 9px;
+}
+.sidebar-brand-dot { width: 9px; height: 9px; background: var(--accent); border-radius: 50%; }
+.sidebar-brand-text { font-size: 1.1rem; font-weight: 900; letter-spacing: -.3px; }
+.sidebar-client-badge {
+  margin: 12px 16px; background: var(--bg3); border-radius: 10px; padding: 10px 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+.scb-avatar {
+  width: 34px; height: 34px; background: var(--accent); border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; color: #111; font-size: .85rem; flex-shrink: 0;
+}
+.scb-name { font-size: .85rem; font-weight: 700; line-height: 1.2; }
+.scb-plan { font-size: .72rem; color: var(--accent); font-weight: 700; }
+
+.sidebar-nav { flex: 1; padding: 8px 10px; }
+.nav-section-label {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em;
+  color: var(--text3); padding: 14px 10px 6px;
+}
+.nav-item {
+  display: flex; align-items: center; gap: 11px;
+  padding: 10px 12px; border-radius: 9px; cursor: pointer;
+  font-size: .88rem; font-weight: 600; color: var(--text2);
+  transition: all .15s; margin-bottom: 2px; text-decoration: none;
+  line-height: 1.4;
+}
+.nav-item:hover { background: var(--bg3); color: var(--text); }
+.nav-item.active { background: rgba(224,255,79,0.1); color: var(--accent); }
+.nav-item .nav-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto; background: var(--red); color: white;
+  font-size: .65rem; font-weight: 900; padding: 2px 7px; border-radius: 100px;
+}
+.sidebar-footer { padding: 14px 16px; border-top: 1px solid var(--border); }
+.sidebar-footer .nav-item { margin-bottom: 0; }
+
+/* Top bar */
+.topbar {
+  position: fixed; top: 0; left: var(--sidebar-w); right: 0; height: var(--nav-h);
+  background: rgba(15,17,23,0.95); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border); z-index: 40;
+  display: flex; align-items: center; padding: 0 28px; gap: 16px;
+}
+.topbar-title { font-size: 1.1rem; font-weight: 900; flex: 1; }
+.topbar-search {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 9px; padding: 8px 14px; width: 240px;
+}
+.topbar-search input {
+  background: none; border: none; outline: none; color: var(--text);
+  font-family: var(--font); font-size: .87rem; width: 100%;
+}
+.topbar-search input::placeholder { color: var(--text3); }
+.topbar-btn {
+  width: 38px; height: 38px; background: var(--bg2); border: 1px solid var(--border2);
+  border-radius: 9px; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; font-size: 1rem; position: relative;
+  transition: background .2s;
+}
+.topbar-btn:hover { background: var(--bg3); }
+.topbar-notif-dot {
+  position: absolute; top: 7px; right: 7px;
+  width: 7px; height: 7px; background: var(--red); border-radius: 50%;
+}
+.topbar-avatar {
+  width: 38px; height: 38px; background: var(--accent); border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; color: #111; font-size: .85rem; cursor: pointer;
+}
+
+/* Main content */
+.main {
+  margin-left: var(--sidebar-w); padding-top: var(--nav-h);
+  min-height: 100vh;
+}
+.page { display: none; padding: 32px 28px; }
+.page.active { display: block; }
+
+/* Cards */
+.card {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px;
+}
+.card-title {
+  font-size: .78rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text2); margin-bottom: 6px;
+}
+
+/* Stat grid */
+.stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+.stat-card {
+  background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 22px; position: relative; overflow: hidden; transition: border-color .2s;
+}
+.stat-card:hover { border-color: var(--border2); }
+.stat-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: var(--border);
+}
+.stat-card.green::before { background: var(--green); }
+.stat-card.blue::before { background: var(--blue); }
+.stat-card.orange::before { background: var(--orange); }
+.stat-card.purple::before { background: var(--purple); }
+.stat-icon { font-size: 1.4rem; margin-bottom: 12px; }
+.stat-val { font-size: 1.8rem; font-weight: 900; line-height: 1; margin-bottom: 4px; }
+.stat-lbl { font-size: .78rem; color: var(--text2); margin-bottom: 8px; }
+.stat-change { font-size: .78rem; font-weight: 700; }
+.stat-change.up { color: var(--green); }
+.stat-change.down { color: var(--red); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); }
+  .main { margin-left: 0; }
+  .topbar { left: 0; }
+  .stat-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+.page.active { animation: fadeIn .3s ease; }
+</style>
+</head>
+<body>
+
+<!-- LOGIN PAGE -->
+<div id="login-page">
+  <div class="login-card">
+    <div class="login-logo">
+      <span class="login-logo-dot"></span>
+      <span class="login-logo-text">NexusAI <span class="login-logo-sub">Portal</span></span>
+    </div>
+    <h2 class="login-title">Welcome back</h2>
+    <p class="login-sub">Sign in to your client dashboard</p>
+    <div class="login-error" id="login-error">Invalid credentials. Try demo / demo123</div>
+    <div class="login-field">
+      <label>User ID</label>
+      <input type="text" id="login-user" placeholder="Enter your user ID" />
+    </div>
+    <div class="login-field">
+      <label>Password</label>
+      <input type="password" id="login-pass" placeholder="Enter your password" />
+    </div>
+    <button class="login-btn" onclick="doLogin()">Sign In →</button>
+    <div class="login-demo">Demo access: <span onclick="fillDemo()">user: demo / pass: demo123</span></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <span class="sidebar-brand-dot"></span>
+      <span class="sidebar-brand-text">NexusAI</span>
+    </div>
+    <div class="sidebar-client-badge">
+      <div class="scb-avatar" id="sb-avatar">MD</div>
+      <div>
+        <div class="scb-name" id="sb-name">Manish Deodha</div>
+        <div class="scb-plan">Pro Plan</div>
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Overview</div>
+      <div class="nav-item active" onclick="showPage('dashboard-home', this)"><span class="nav-icon">🏠</span> Dashboard</div>
+      <div class="nav-item" onclick="showPage('orders', this)"><span class="nav-icon">📦</span> Orders <span class="nav-badge">3</span></div>
+      <div class="nav-item" onclick="showPage('earnings', this)"><span class="nav-icon">💰</span> Earnings</div>
+
+      <div class="nav-section-label">Finance</div>
+      <div class="nav-item" onclick="showPage('cards', this)"><span class="nav-icon">💳</span> Cards</div>
+      <div class="nav-item" onclick="showPage('expenses', this)"><span class="nav-icon">🧾</span> Expenses</div>
+      <div class="nav-item" onclick="showPage('billpay', this)"><span class="nav-icon">📄</span> Bill Pay</div>
+      <div class="nav-item" onclick="showPage('banking', this)"><span class="nav-icon">🏦</span> Banking</div>
+
+      <div class="nav-section-label">Operations</div>
+      <div class="nav-item" onclick="showPage('reports', this)"><span class="nav-icon">📊</span> Reports</div>
+      <div class="nav-item" onclick="showPage('team', this)"><span class="nav-icon">👥</span> Team</div>
+
+      <div class="nav-section-label">Account</div>
+      <div class="nav-item" onclick="showPage('settings', this)"><span class="nav-icon">⚙️</span> Settings</div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="nav-item" onclick="doLogout()"><span class="nav-icon">🚪</span> Logout</div>
+    </div>
+  </aside>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="topbar-title" id="topbar-title">Dashboard</div>
+    <div class="topbar-search">
+      <span>🔍</span>
+      <input type="text" placeholder="Search anything…" />
+    </div>
+    <div class="topbar-btn">🔔<div class="topbar-notif-dot"></div></div>
+    <div class="topbar-btn">❓</div>
+    <div class="topbar-avatar" id="tb-avatar">MD</div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- DASHBOARD HOME -->
+    <div class="page active" id="page-dashboard-home">
+      <div style="margin-bottom: 28px;">
+        <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Good morning, Manish 👋</h1>
+        <p style="color: var(--text2); font-size: .9rem;">Here's what's happening with your projects today.</p>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card green">
+          <div class="stat-icon">💰</div>
+          <div class="stat-val">₹4.2L</div>
+          <div class="stat-lbl">Total Earnings (Month)</div>
+          <div class="stat-change up">↑ 18.4% vs last month</div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-icon">📦</div>
+          <div class="stat-val">12</div>
+          <div class="stat-lbl">Total Orders</div>
+          <div class="stat-change up">↑ 3 new this week</div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-icon">⏳</div>
+          <div class="stat-val">₹85K</div>
+          <div class="stat-lbl">Pending Amount</div>
+          <div class="stat-change down">↓ 2 invoices due</div>
+        </div>
+        <div class="stat-card purple">
+          <div class="stat-icon">✅</div>
+          <div class="stat-val">9</div>
+          <div class="stat-lbl">Completed Projects</div>
+          <div class="stat-change up">↑ 75% completion rate</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom: 16px;">Welcome to Your Portal</div>
+        <p style="color: var(--text2); margin-bottom: 16px;">Your complete financial and project management dashboard is now live. Track orders, earnings, expenses, and team performance all in one place.</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <button style="background: var(--accent); color: #111; border: none; padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;">View Full Dashboard</button>
+          <button style="background: var(--bg3); color: var(--text); border: 1px solid var(--border2); padding: 10px 18px; border-radius: 8px; font-weight: 700; cursor: pointer;">Learn More</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ORDERS -->
+    <div class="page" id="page-orders">
+      <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Order Management</h1>
+      <p style="color: var(--text2); font-size: .9rem; margin-bottom: 24px;">Track all your project orders and deliverables.</p>
+      <div class="stat-grid">
+        <div class="stat-card blue"><div class="stat-icon">📦</div><div class="stat-val">12</div><div class="stat-lbl">Total Orders</div></div>
+        <div class="stat-card green"><div class="stat-icon">✅</div><div class="stat-val">9</div><div class="stat-lbl">Completed</div></div>
+        <div class="stat-card orange"><div class="stat-icon">🔄</div><div class="stat-val">2</div><div class="stat-lbl">In Progress</div></div>
+        <div class="stat-card purple"><div class="stat-icon">⏳</div><div class="stat-val">1</div><div class="stat-lbl">Pending Payment</div></div>
+      </div>
+    </div>
+
+    <!-- EARNINGS -->
+    <div class="page" id="page-earnings">
+      <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Earnings</h1>
+      <p style="color: var(--text2); font-size: .9rem; margin-bottom: 24px;">Your complete financial overview.</p>
+      <div class="stat-grid">
+        <div class="stat-card green"><div class="stat-icon">💵</div><div class="stat-val">₹4.2L</div><div class="stat-lbl">This Month</div></div>
+        <div class="stat-card blue"><div class="stat-icon">🔄</div><div class="stat-val">₹85K</div><div class="stat-lbl">Pending</div></div>
+        <div class="stat-card orange"><div class="stat-icon">📤</div><div class="stat-val">₹24K</div><div class="stat-lbl">Expenses</div></div>
+        <div class="stat-card purple"><div class="stat-icon">📈</div><div class="stat-val">₹2.85L</div><div class="stat-lbl">Net Profit</div></div>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div class="page" id="page-cards">
+      <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Corporate Cards</h1>
+      <p style="color: var(--text2); font-size: .9rem; margin-bottom: 24px;">Manage virtual and physical cards for your team.</p>
+      <div class="card">
+        <div class="card-title" style="margin-bottom: 16px;">Your Cards</div>
+        <p style="color: var(--text2);">Corporate card management coming soon. Track physical and virtual cards, spending limits, and team access here.</p>
+      </div>
+    </div>
+
+    <!-- EXPENSES -->
+    <div class="page" id="page-expenses">
+      <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Expense Management</h1>
+      <p style="color: var(--text2); font-size: .9rem; margin-bottom: 24px;">Upload receipts and track spending.</p>
+      <div class="card">
+        <div class="card-title" style="margin-bottom: 16px;">Request Upload</div>
+        <p style="color: var(--text2); margin-bottom: 16px;">Expense tracking and receipt upload feature coming soon.</p>
+      </div>
+    </div>
+
+    <!-- BILL PAY -->
+    <div class="page" id="page-billpay">
+      <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Bill Pay / AP Automation</h1>
+      <p style="color: var(--text2); font-size: .9rem; margin-bottom: 24px;">Manage vendor invoices and payments.</p>
+      <div class="card">
+        <div class="card-title" style="margin-bottom: 16px;">Pending Invoices</div>
+        <p style="color: var(--text2);">Bill payment and AP automation features coming soon.</p>
+      </div>
+    </div>
+
+    <!-- BANKING -->
+    <div class="page" id="page-banking">
+      <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Business Banking</h1>
+      <p style="color: var(--text2); font-size: .9rem; margin-bottom: 24px;">Your business account overview.</p>
+      <div class="card">
+        <div class="card-title" style="margin-bottom: 16px;">Account Status</div>
+        <p style="color: var(--text2);">Banking features and account management coming soon.</p>
+      </div>
+    </div>
+
+    <!-- REPORTS -->
+    <div class="page" id="page-reports">
+      <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Reports & Budgets</h1>
+      <p style="color: var(--text2); font-size: .9rem; margin-bottom: 24px;">Real-time financial reporting.</p>
+      <div class="card">
+        <div class="card-title" style="margin-bottom: 16px;">Monthly Reports</div>
+        <p style="color: var(--text2);">Comprehensive reporting and budget tracking coming soon.</p>
+      </div>
+    </div>
+
+    <!-- TEAM -->
+    <div class="page" id="page-team">
+      <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Team & Permissions</h1>
+      <p style="color: var(--text2); font-size: .9rem; margin-bottom: 24px;">Manage your team members and access.</p>
+      <div class="card">
+        <div class="card-title" style="margin-bottom: 16px;">Team Members</div>
+        <p style="color: var(--text2);">Team management features coming soon.</p>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page" id="page-settings">
+      <h1 style="font-size: 1.6rem; font-weight: 900; margin-bottom: 4px;">Settings</h1>
+      <p style="color: var(--text2); font-size: .9rem; margin-bottom: 24px;">Manage your account and preferences.</p>
+      <div class="card">
+        <div class="card-title" style="margin-bottom: 16px;">Account Settings</div>
+        <p style="color: var(--text2);">Email, password, and notification preferences coming soon.</p>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// AUTH
+const USERS = { 'demo': 'demo123', 'manish': 'nexus@2026', 'admin': 'admin123' };
+
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value.trim();
+  const err = document.getElementById('login-error');
+  if (USERS[u] && USERS[u] === p) {
+    document.getElementById('login-page').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    err.style.display = 'none';
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+function fillDemo() {
+  document.getElementById('login-user').value = 'demo';
+  document.getElementById('login-pass').value = 'demo123';
+}
+
+function doLogout() {
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('login-page').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('login-page').style.display !== 'none') doLogin();
+});
+
+// NAVIGATION
+const pageTitles = {
+  'dashboard-home': 'Dashboard', 'orders': 'Order Management',
+  'earnings': 'Earnings', 'cards': 'Corporate Cards',
+  'expenses': 'Expense Management', 'billpay': 'Bill Pay / AP',
+  'banking': 'Business Banking', 'reports': 'Reports & Budgets',
+  'team': 'Team & Permissions', 'settings': 'Settings'
+};
+
+function showPage(id, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  if (el) el.classList.add('active');
+  document.getElementById('topbar-title').textContent = pageTitles[id] || id;
+}
+</script>
+</body>
+</html>

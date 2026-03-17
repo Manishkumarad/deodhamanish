@@ -1,11 +1,14 @@
 {
-  "name": "nexus-ai-agency",
-  "version": "1.0.0",
-  "description": "AI-powered development agency website",
+  "name": "nexusai-enterprise",
+  "version": "2.0.0",
+  "description": "NexusAI - Premium Enterprise Software Development Agency with Client Portal",
+  "author": "Manish Deodha",
+  "keywords": ["saas", "enterprise", "ai", "agency", "dashboard", "portal"],
   "scripts": {
-    "build": "mkdir -p public && cp public/index.html public/index.html || echo 'Static site ready'",
     "dev": "serve public -p 8000",
-    "start": "serve public -p 8000"
+    "start": "serve public -p 8000",
+    "server": "node server.js",
+    "build": "echo 'Static site - no build needed'"
   },
   "dependencies": {
     "nodemailer": "^6.9.7"
@@ -14,3 +17,4 @@
     "serve": "^14.2.1"
   }
 }
+
