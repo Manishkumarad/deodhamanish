@@ -926,6 +926,117 @@
   .section-head.center { text-align: center; }
   .section-head.center .section-sub { margin: 14px auto 0; }
 
+  /* ── CASE STUDIES ── */
+  .case-studies {
+    background: var(--bg-light);
+    padding: 100px 5%;
+  }
+  .case-study-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .case-study-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+    overflow: hidden;
+  }
+  .case-study-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  }
+  .case-study-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 30px;
+    border-bottom: 1px solid var(--grey-200);
+  }
+  .case-study-logo {
+    width: 60px;
+    height: 60px;
+    background: var(--primary-blue);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+  }
+  .case-study-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .case-study-subtitle {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-cyan);
+    margin-bottom: 16px;
+  }
+  .case-study-badge {
+    margin-left: auto;
+    background: var(--accent-cyan);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .case-study-content {
+    padding: 30px;
+  }
+  .case-study-problem,
+  .case-study-solution,
+  .case-study-results {
+    margin-bottom: 24px;
+  }
+  .case-study-problem h4,
+  .case-study-solution h4,
+  .case-study-results h4 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 12px;
+  }
+  .case-study-problem p,
+  .case-study-solution p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  .result-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    background: var(--bg-light);
+    padding: 20px;
+    border-radius: 12px;
+  }
+  .result-metric {
+    text-align: center;
+  }
+  .result-value {
+    display: block;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--primary-blue);
+    margin-bottom: 4px;
+  }
+  .result-label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+  }
+
   /* ── SERVICES ── */
   .services { background: var(--white); }
   .services-grid {
@@ -1475,23 +1586,37 @@
               <div class="metric-value">89%</div>
               <div class="metric-label">Conversion Rate</div>
             </div>
+            <div class="metric">
+              <div class="metric-value">24/7</div>
+              <div class="metric-label">Automation Support</div>
+            </div>
           </div>
-          <div class="mockup-chart"></div>
-          <div class="metric-box">
+          <div class="mockup-chart" style="height: 120px; background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue)); border-radius: 8px; position: relative; overflow: hidden;">
+            <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 30px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: space-around;">
+              <div style="width: 3px; height: 3px; background: #22D3EE; border-radius: 50%; animation: pulse 2s infinite;"></div>
+              <div style="width: 3px; height: 3px; background: #22D3EE; border-radius: 50%; animation: pulse 2s infinite; animation-delay: 0.5s;"></div>
+              <div style="width: 3px; height: 3px; background: #22D3EE; border-radius: 50%; animation: pulse 2s infinite; animation-delay: 1s;"></div>
+              <div style="width: 3px; height: 3px; background: #22D3EE; border-radius: 50%; animation: pulse 2s infinite; animation-delay: 1.5s;"></div>
+            </div>
+          </div>
+          <div class="metric-box" style="margin-top: 16px; background: rgba(255,255,255,0.05); border: 1px solid var(--grey-200); border-radius: 8px; padding: 12px;">
             <div class="metric-val">11M</div>
             <div class="metric-lbl">Hours automated</div>
-            <div class="metric-up" style="color:#22c55e">↑ 8.9%</div>
+            <div class="metric-up" style="color:#22c55e;">↑ 8.9%</div>
+          </div>
+          <div class="mockup-bar-label">Weekly AI task volume</div>
+          <div class="bars">
+            <div class="bar" style="height:30%"></div>
+            <div class="bar" style="height:55%"></div>
+            <div class="bar" style="height:70%"></div>
+            <div class="bar" style="height:45%"></div>
+            <div class="bar" style="height:85%"></div>
+            <div class="bar" style="height:65%"></div>
+            <div class="bar" style="height:40%"></div>
           </div>
         </div>
-        <div class="mockup-bar-label">Weekly AI task volume</div>
-        <div class="bars">
-          <div class="bar" style="height:30%"></div>
-          <div class="bar" style="height:55%"></div>
-          <div class="bar" style="height:45%"></div>
-          <div class="bar" style="height:70%"></div>
-          <div class="bar active" style="height:90%"></div>
-          <div class="bar" style="height:65%"></div>
-          <div class="bar" style="height:80%"></div>
+      </div>
+    </div>
         </div>
       </div>
       <div class="float-pill pill-2"><span class="pill-icon">✅</span> AI workflow complete</div>
@@ -1944,24 +2069,49 @@
 <section class="case-studies" id="case-studies">
   <div class="section-head center">
     <div class="section-label">Success Stories</div>
-    <h2 class="section-title">Proven Results With Real Clients</h2>
-    <p class="section-sub">See how we've helped businesses like yours achieve measurable growth</p>
+    <h2 class="section-title">Enterprise Results With Real Clients</h2>
+    <p class="section-sub">See how we've helped businesses achieve measurable growth through digital transformation</p>
   </div>
   <div class="case-study-grid">
     <div class="case-study-card">
-      <div class="case-study-logo">🏨</div>
-      <h3>Courtyard by Marriott Bhopal</h3>
-      <p>Custom hotel management system with booking, inventory, and customer loyalty features</p>
-          <div class="step-num">02</div>
-          <div class="step-content">
-            <h4>Design & Prototype</h4>
-            <p>High-fidelity prototypes built in Figma with AI-assisted design generation, tested with real users before a single line of code.</p>
+      <div class="case-study-header">
+        <div class="case-study-logo">🏨</div>
+        <div>
+          <div class="case-study-title">Courtyard by Marriott Bhopal</div>
+          <div class="case-study-subtitle">Hospitality Digital Transformation</div>
+        </div>
+        <div class="case-study-badge">Featured Client</div>
+      </div>
+      <div class="case-study-content">
+        <div class="case-study-problem">
+          <h4>Challenge</h4>
+          <p>Manual booking processes, disconnected guest experiences, and no centralized property management system.</p>
+        </div>
+        <div class="case-study-solution">
+          <h4>Solution</h4>
+          <p>Complete digital platform with automated booking engine, real-time inventory sync, and AI-powered guest concierge service.</p>
+        </div>
+        <div class="case-study-results">
+          <h4>Results</h4>
+          <div class="result-metrics">
+            <div class="result-metric">
+              <span class="result-value">+45%</span>
+              <span class="result-label">Booking Conversion Rate</span>
+            </div>
+            <div class="result-metric">
+              <span class="result-value">-70%</span>
+              <span class="result-label">Manual Workload</span>
+            </div>
+            <div class="result-metric">
+              <span class="result-value">24/7</span>
+              <span class="result-label">AI Support</span>
+            </div>
           </div>
         </div>
-        <div class="step">
-          <div class="step-num">03</div>
-          <div class="step-content">
-            <h4>AI-Accelerated Build</h4>
+      </div>
+    </div>
+  </div>
+</section>
             <p>Our engineers use AI-assisted coding, automated testing, and CI/CD pipelines to ship 2–3× faster than traditional agencies.</p>
           </div>
         </div>
